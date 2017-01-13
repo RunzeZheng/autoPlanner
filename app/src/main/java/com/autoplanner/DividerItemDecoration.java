@@ -22,7 +22,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
         if (parent.getChildAdapterPosition(view) != 0) {
             if (verticalOrientation) {
-                outRect.set(10, 20, 20, 110);
+                outRect.set(10, 20, 20, 10);
             }
         }
     }
