@@ -2,6 +2,8 @@ package com.autoplanner;
 
 import android.util.ArraySet;
 
+import java.util.ArrayList;
+
 /**
  * Created by zrzzg on 12/29/2016.
  */
@@ -36,16 +38,69 @@ public class sorter {
 
 
     public ArraySet<Task> optimizedSort(ArraySet<Task> taskList) {
-        ArraySet<Task> result = taskList;
+        ArraySet<Task> workingTaskList = taskList;
+        ArraySet<Task> result = new ArraySet<>();
+        ArrayList<Task> temp = new ArrayList<>(), temp2 = new ArrayList<>(), temp3 = new ArrayList<>();
         String endTime;
         long year, month, day, hour, minute;
         long currentTime = System.currentTimeMillis();
+        int order = 0;
 
-        for (Task task : taskList
+        //update the variable timeLeftAfterDone and overDue
+        for (Task t : workingTaskList
                 ) {
+            if (t.getDeadlindMilli() < currentTime) {
+                t.setOverDue(true);
+            } else {
+                t.setOverDue(false);
+            }
 
-            task.setTimeLeftAfterDone(task.getDeadlindMilli() - currentTime - task.getDurationMilli());
+            t.setTimeLeftAfterDone(t.getDeadlindMilli() - currentTime - t.getDurationMilli());
         }
-        return result;
+
+
+        while (!workingTaskList.isEmpty()) {
+            long smallest = workingTaskList.valueAt(0).getTimeLeftAfterDone();
+            temp.clear();
+            temp2.clear();
+            temp3.clear();
+
+            //sort by timeLeftAfterDone first
+            for (int i = 0; i < workingTaskList.size(); i++) {
+                if (workingTaskList.valueAt(i).getTimeLeftAfterDone() < smallest) {
+                    smallest = workingTaskList.valueAt(i).getTimeLeftAfterDone();
+                    temp.clear();
+                } else if (workingTaskList.valueAt(i).getTimeLeftAfterDone() == smallest) {
+                    temp.add(workingTaskList.valueAt(i));
+                    workingTaskList.removeAt(i);
+                }
+            }
+
+            while (!temp.isEmpty()) {
+                //then sort by deadline
+                if (temp.size() > 1) {
+                    long smallestDeadline = temp.get(0).getDeadlindMilli();
+                    for (int i = 0; i < temp.size(); i++) {
+                        if (temp.get(i).getDeadlindMilli() < smallestDeadline) {
+                            smallestDeadline = temp.get(i).getDeadlindMilli();
+                            temp2.clear();
+                        } else if (temp.get(i).getDeadlindMilli() == smallestDeadline) {
+                            temp2.add(temp.get(i));
+                            temp.remove(i);
+                        }
+                    }
+                } else if (temp.size() == 1) {
+                    result.add(temp.get(0));
+                    temp.remove(0);
+                }
+
+                while (!temp2.isEmpty()) {
+                    //lastly sort by duration
+                }
+            }
+        }
+
+        return workingTaskList;
     }
+
 }

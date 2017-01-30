@@ -36,7 +36,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Button submit = (Button) findViewById(R.id.addButton);
+        final Button submit = (Button) findViewById(R.id.addButton);
         final TextView what = (TextView) findViewById(R.id.whatText);
         final TextView when = (TextView) findViewById(R.id.whenText);
         final TextView where = (TextView) findViewById(R.id.whereText);
@@ -49,20 +49,25 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
                 t.setDeadline(when.getText().toString());
                 t.setWhere(where.getText().toString());
                 t.setOrder(-1);
-                AllTasksView.taskList.add(t);
+                sorter sorter = new sorter();
+                if (sorter.doabilityCheck(t)) {
+                    AllTasksView.taskList.add(t);
 
-                SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = prefs.edit();
-                Gson gson = new Gson();
-                String json = gson.toJson(AllTasksView.taskList);
-                prefsEditor.clear();
-                prefsEditor.putString("savedTasks", json);
-                prefsEditor.commit();
+                    SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);
+                    SharedPreferences.Editor prefsEditor = prefs.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(AllTasksView.taskList);
+                    prefsEditor.clear();
+                    prefsEditor.putString("savedTasks", json);
+                    prefsEditor.commit();
 
-                //go back to main view
-                Context context = view.getContext();
-                Intent intent = new Intent(context, AllTasksView.class);
-                startActivity(intent);
+                    //go back to main view
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, AllTasksView.class);
+                    startActivity(intent);
+                } else {
+                    submit.setText("Task already overdue or don't have enough time to finish");
+                }
             }
         });
     }
