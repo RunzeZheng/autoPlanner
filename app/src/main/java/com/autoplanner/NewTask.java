@@ -38,7 +38,8 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
 
         final Button submit = (Button) findViewById(R.id.addButton);
         final TextView what = (TextView) findViewById(R.id.whatText);
-        final TextView when = (TextView) findViewById(R.id.whenText);
+        final TextView deadline = (TextView) findViewById(R.id.deadlineText);
+        final TextView duration = (TextView) findViewById(R.id.durationText);
         final TextView where = (TextView) findViewById(R.id.whereText);
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +47,8 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
             public void onClick(View view) {
                 Task t = new Task();
                 t.setWhat(what.getText().toString());
-                t.setDeadline(when.getText().toString());
+                t.setDeadline(deadline.getText().toString());
+                t.setDuration(Double.parseDouble(duration.getText().toString()));
                 t.setWhere(where.getText().toString());
                 t.setOrder(-1);
                 sorter sorter = new sorter();

@@ -6,18 +6,19 @@ package com.autoplanner;
 
 public class Task {
     private String what, where, deadline;
-    private int order, duration;
+    private int order;
+    private double duration;
     private long deadlindMilli, durationMilli, timeLeftAfterDone;
     private boolean overDue;
 
     public Task(){
     }
 
-    public int getDuration() {
+    public double getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(double duration) {
         this.duration = duration;
     }
 

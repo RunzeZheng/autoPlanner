@@ -29,11 +29,11 @@
             android:fontFamily="sans-serif-light"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/description"
+            android:id="@+id/whatText"
             android:layout_gravity="left|center_horizontal"
             android:textColor="#000000"
             android:fontFamily="sans-serif-light"/>
@@ -42,20 +42,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="When:"
+            android:text="Deadline:"
             android:id="@+id/textView3"
             android:fontFamily="sans-serif-light"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/duration"
+            android:id="@+id/deadlineText"
             android:layout_gravity="left|center_horizontal"
             android:textColor="#000000"
             android:editable="true"
             android:fontFamily="sans-serif-light"/>
+
+        <TextView
+            android:text="Time needed: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:fontFamily="sans-serif-light" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/durationText"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@android:color/background_dark" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +86,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/location"
+            android:id="@+id/locationText"
             android:textColor="#000000"
             android:editable="true"
             android:fontFamily="sans-serif-light"/>

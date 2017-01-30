@@ -13,7 +13,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DetailView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView description;
+    private TextView what;
+    private TextView deadline;
     private TextView duration;
     private TextView location;
 
@@ -33,13 +34,15 @@ public class DetailView extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.description = (TextView) findViewById(R.id.description);
-        this.duration = (TextView) findViewById(R.id.duration);
-        this.location = (TextView) findViewById(R.id.location);
+        this.what = (TextView) findViewById(R.id.whatText);
+        this.deadline = (TextView) findViewById(R.id.deadlineText);
+        this.duration = (TextView) findViewById(R.id.durationText);
+        this.location = (TextView) findViewById(R.id.locationText);
 
         Intent intent = getIntent();
-        description.setText(intent.getStringExtra("what"));
-        duration.setText(intent.getStringExtra("when"));
+        what.setText(intent.getStringExtra("what"));
+        deadline.setText(intent.getStringExtra("deadline"));
+        duration.setText(intent.getStringExtra("duration"));
         location.setText(intent.getStringExtra("where"));
     }
 

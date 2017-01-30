@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -54,7 +55,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             taskList = new ArraySet<>();
             Task t = new Task();
             t.setWhat("Welcome to auto planner! There is no task. Please add a new task to get started.");
-            t.setDeadline("n");
+            t.setDeadline("2017 01 30 23 59");
             t.setWhere("Made by Runze Zheng");
             t.setOrder(-1);
             taskList.add(t);

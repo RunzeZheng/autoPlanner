@@ -2,48 +2,50 @@ package com.autoplanner;
 
 import android.util.ArraySet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by zrzzg on 12/29/2016.
  */
 public class sorter {
-    private String endTime;
 
     public boolean doabilityCheck(Task t) {
-        long year, month, day, hour, minute;
-        long deadline, duration, currentTime;
+        String endTime;
+        String year, month, day, hour, minute;
+        long deadline, currentTimeInMillis;
+        double  duration;
 
-        currentTime = System.currentTimeMillis();
+        currentTimeInMillis = System.currentTimeMillis();
 
         //deadline to milliseconds
         endTime = t.getDeadline();//format: 2017/01/01 23:59
-        year = Integer.parseInt(endTime.substring(0, 4));//year
-        month = Integer.parseInt(endTime.substring(5, 7));//month
-        day = Integer.parseInt(endTime.substring(8, 10));//day
-        hour = Integer.parseInt(endTime.substring(11, 13));//hour
-        minute = Integer.parseInt(endTime.substring(14, 16));//minute
-        deadline = (year - 1970) * 31556952000L + (month - 1) * 2592000000L + (day - 1) * 86400000L
-                + hour * 3600000 + minute * 60000;
-        t.setDeadlindMilli(deadline);
+        year = endTime.substring(0, 4);//year
+        month = endTime.substring(5, 7);//month
+        day = endTime.substring(8, 10);//day
+        hour = endTime.substring(11, 13);//hour
+        minute = endTime.substring(14, 16);//minute
+        String myDate = year+"/"+month+"/"+day+"/"+" "+hour+":"+minute;
+        Date deadlineDate = new Date(endTime);
 
         //duration to milliseconds
         duration = t.getDuration();
-        long durationInMilliseconds = duration * 3600000;
+        long durationInMilliseconds =(long) duration * 3600000;
         t.setDurationMilli(durationInMilliseconds);
 
+        long deadlineTimeInMillis = deadlineDate.getTime();
+        t.setDeadlindMilli(deadlineTimeInMillis);
         //don't allow to add task if deadline is in the past or time is not enough to finish the task
-        return !(deadline < currentTime || currentTime + durationInMilliseconds > deadline);
+        return !(deadlineTimeInMillis < currentTimeInMillis || currentTimeInMillis + durationInMilliseconds > deadlineTimeInMillis);
     }
 
 
     public ArraySet<Task> optimizedSort(ArraySet<Task> taskList) {
-        ArraySet<Task> workingTaskList = taskList;
-        ArraySet<Task> result = new ArraySet<>();
+        ArraySet<Task> workingTaskList = taskList, result = new ArraySet<>();
         ArrayList<Task> temp = new ArrayList<>(), temp2 = new ArrayList<>(), temp3 = new ArrayList<>();
         String endTime;
-        long year, month, day, hour, minute;
-        long currentTime = System.currentTimeMillis();
+        long year, month, day, hour, minute, currentTime = System.currentTimeMillis();
         int order = 0;
 
         //update the variable timeLeftAfterDone and overDue
@@ -96,6 +98,21 @@ public class sorter {
 
                 while (!temp2.isEmpty()) {
                     //lastly sort by duration
+                    if (temp2.size() > 1){
+                        long smallestDuration = temp2.get(0).getDurationMilli();
+                        for (int i = 0; i < temp2.size(); i++) {
+                            if (temp2.get(i).getDurationMilli() < smallestDuration){
+                                smallestDuration = temp2.get(i).getDurationMilli();
+                                temp3.clear();
+                            }else if (temp2.get(i).getDurationMilli() == smallestDuration){
+                                temp3.add(temp2.get(i));
+                                temp2.remove(i);
+                            }
+                        }
+                    } else if (temp2.size() == 1){
+                        result.add(temp2.get(0));
+                        temp2.remove(0);
+                    }
                 }
             }
         }

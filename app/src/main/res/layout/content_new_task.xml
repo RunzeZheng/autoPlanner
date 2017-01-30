@@ -36,10 +36,10 @@
             android:id="@+id/whatText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/what"
             android:ems="10"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:layout_below="@+id/what"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/deadline"
@@ -48,11 +48,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/whatText"
             android:fontFamily="sans-serif-light"
-            android:text="When:"
+            android:text="Deadline:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/whenText"
+            android:id="@+id/deadlineText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -61,11 +61,28 @@
             android:inputType="textMultiLine" />
 
         <TextView
+            android:text="Duration: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duration"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:fontFamily="sans-serif-light"
+            android:layout_below="@+id/deadlineText" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/durationText"
+            android:layout_below="@+id/duration" />
+
+        <TextView
             android:id="@+id/where"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/whenText"
+            android:layout_below="@+id/durationText"
             android:fontFamily="sans-serif-light"
             android:text="Where:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -89,5 +106,6 @@
             android:text="Add"
             android:textColor="#ffffff"
             android:textSize="20dp"/>
+
     </RelativeLayout>
 </RelativeLayout>
