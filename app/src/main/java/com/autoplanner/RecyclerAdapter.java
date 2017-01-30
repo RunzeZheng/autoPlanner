@@ -18,6 +18,36 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
     private ArraySet<String> what = new ArraySet<>();
     private ArraySet<String> where = new ArraySet<>();
 
+    public RecyclerAdapter(ArraySet<Task> taskList) {
+        if (taskList.size() != 0) {
+            for (int i = 0; i < taskList.size(); i++) {
+                what.add(taskList.valueAt(i).getWhat());
+                when.add(taskList.valueAt(i).getDeadline());
+                where.add(taskList.valueAt(i).getWhere());
+            }
+        }
+    }
+
+    @Override
+    public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_row, parent, false);
+        return new TaskHolder(inflatedView);
+    }
+
+    @Override
+    public void onBindViewHolder(TaskHolder holder, int position) {
+        try {
+            holder.bindTask(what.valueAt(position), when.valueAt(position), where.valueAt(position));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            holder.bindTask(what.valueAt(position), null, null);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return what.size();
+    }
+
     public static class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mItemWhat;
@@ -48,35 +78,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
             mItemWhen.setText(when);
             mItemWhere.setText(where);
         }
-    }
-
-    public RecyclerAdapter(ArraySet<Task> taskList) {
-        if (taskList.size() != 0) {
-            for (int i = 0; i < taskList.size(); i++) {
-                what.add(taskList.valueAt(i).getWhat());
-                when.add(taskList.valueAt(i).getWhen());
-                where.add(taskList.valueAt(i).getWhere());
-            }
-        }
-    }
-
-    @Override
-    public TaskHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_row, parent, false);
-        return new TaskHolder(inflatedView);
-    }
-
-    @Override
-    public void onBindViewHolder(TaskHolder holder, int position) {
-        try {
-            holder.bindTask(what.valueAt(position), when.valueAt(position), where.valueAt(position));
-        }catch (ArrayIndexOutOfBoundsException e){
-            holder.bindTask(what.valueAt(position), null, null);
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return what.size();
     }
 }

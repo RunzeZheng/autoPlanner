@@ -23,70 +23,70 @@
         tools:context=".newTaskActivity">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="What: "
             android:id="@+id/what"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-light"
+            android:text="What: "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
             android:id="@+id/whatText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/what"
-            android:layout_alignParentStart="true" />
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
         <TextView
+            android:id="@+id/deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="When:"
-            android:id="@+id/when"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/whatText"
-            android:layout_alignParentStart="true"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-light"
+            android:text="When:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
+            android:id="@+id/whenText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/deadline"
             android:ems="10"
-            android:id="@+id/whenText"
-            android:layout_below="@+id/when"
-            android:layout_alignParentStart="true" />
+            android:inputType="textMultiLine" />
 
         <TextView
+            android:id="@+id/where"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Where:"
-            android:id="@+id/where"
-            android:layout_below="@+id/whenText"
             android:layout_alignParentStart="true"
-            android:fontFamily="sans-serif-light"/>
+            android:layout_below="@+id/whenText"
+            android:fontFamily="sans-serif-light"
+            android:text="Where:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
+            android:id="@+id/whereText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/whereText"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/where"
-            android:layout_alignParentStart="true" />
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
         <Button
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add"
-            android:id="@+id/addButton"
             android:layout_below="@+id/whereText"
             android:layout_centerHorizontal="true"
             android:background="@color/colorAccent"
+            android:text="Add"
             android:textColor="#ffffff"
             android:textSize="20dp"/>
     </RelativeLayout>

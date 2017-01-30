@@ -5,12 +5,20 @@ package com.autoplanner;
  */
 
 public class Task {
-    private String what;
-    private String where;
-    private String when;
-    private int order;
+    private String what, where, deadline;
+    private int order, duration;
+    private long deadlindMilli, durationMilli, timeLeftAfterDone;
+    private boolean overDue;
 
     public Task(){
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getWhat() {
@@ -29,12 +37,12 @@ public class Task {
         this.where = where;
     }
 
-    public String getWhen() {
-        return when;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setWhen(String when) {
-        this.when = when;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public int getOrder() {
@@ -43,5 +51,37 @@ public class Task {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public long getTimeLeftAfterDone() {
+        return timeLeftAfterDone;
+    }
+
+    public void setTimeLeftAfterDone(long timeLeftAfterDone) {
+        this.timeLeftAfterDone = timeLeftAfterDone;
+    }
+
+    public long getDurationMilli() {
+        return durationMilli;
+    }
+
+    public void setDurationMilli(long durationMilli) {
+        this.durationMilli = durationMilli;
+    }
+
+    public long getDeadlindMilli() {
+        return deadlindMilli;
+    }
+
+    public void setDeadlindMilli(long deadlindMilli) {
+        this.deadlindMilli = deadlindMilli;
+    }
+
+    public boolean isOverDue() {
+        return overDue;
+    }
+
+    public void setOverDue(boolean overDue) {
+        this.overDue = overDue;
     }
 }

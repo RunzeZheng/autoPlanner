@@ -6,34 +6,34 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.ArraySet;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.ArraySet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.lang.reflect.Type;
 
 public class AllTasksView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /* create the array list to save the data */
     public static ArraySet<Task> taskList = new ArraySet<>();
-
+    private final int InternetRequest = 0;
+    private final int GoogleRequest = 93;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerAdapter mAdapter;
-
-    private final int InternetRequest = 0;
-    private final int GoogleRequest = 93;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             taskList = new ArraySet<>();
             Task t = new Task();
             t.setWhat("Welcome to auto planner! There is no task. Please add a new task to get started.");
-            t.setWhen("n");
+            t.setDeadline("n");
             t.setWhere("Made by Runze Zheng");
             t.setOrder(-1);
             taskList.add(t);

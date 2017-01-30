@@ -15,19 +15,19 @@ public class ExampleUnitTest {
 
         Task a = new Task();
         a.setWhat("task1");
-        a.setWhen("day1");
+        a.setDeadline("day1");
         a.setWhere("place1");
         a.setOrder(-1);
 
         Task b = new Task();
         b.setWhat("task2");
-        b.setWhen("day2");
+        b.setDeadline("day2");
         b.setWhere("place2");
         b.setOrder(-1);
 
         Task c = new Task();
         c.setWhat("task3");
-        c.setWhen("day3");
+        c.setDeadline("day3");
         c.setWhere("place3");
         c.setOrder(-1);
 
