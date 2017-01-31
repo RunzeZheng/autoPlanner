@@ -7,8 +7,7 @@ package com.autoplanner;
 public class Task {
     private String what, where, deadline;
     private int order;
-    private double duration;
-    private long deadlineMilli, durationMilli, timeLeftAfterDone;
+    private double duration, durationMilli, timeLeftAfterDone, deadlineMilli;
     private boolean overDue;
 
     public Task(){
@@ -54,27 +53,27 @@ public class Task {
         this.order = order;
     }
 
-    public long getTimeLeftAfterDone() {
+    public double getTimeLeftAfterDone() {
         return timeLeftAfterDone;
     }
 
-    public void setTimeLeftAfterDone(long timeLeftAfterDone) {
+    public void setTimeLeftAfterDone(double timeLeftAfterDone) {
         this.timeLeftAfterDone = timeLeftAfterDone;
     }
 
-    public long getDurationMilli() {
+    public double getDurationMilli() {
         return durationMilli;
     }
 
-    public void setDurationMilli(long durationMilli) {
+    public void setDurationMilli(double durationMilli) {
         this.durationMilli = durationMilli;
     }
 
-    public long getDeadlineMilli() {
+    public double getDeadlineMilli() {
         return deadlineMilli;
     }
 
-    public void setDeadlineMilli(long deadlineMilli) {
+    public void setDeadlineMilli(double deadlineMilli) {
         this.deadlineMilli = deadlineMilli;
     }
 

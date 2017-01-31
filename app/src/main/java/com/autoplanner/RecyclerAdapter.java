@@ -48,7 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
 
     @Override
     public int getItemCount() {
-        return what.size();
+        return taskList.size();
     }
 
     public static class TaskHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -71,8 +71,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         }
 
         //sort
-        //Sorter sr = new Sorter();
-        //taskList = sr.optimizedSort(taskList);
+        Sorter sr = new Sorter();
+        taskList = sr.optimizedSort(taskList);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +124,15 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            //parse a gson and save to shared preference
+            SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = prefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(AllTasksView.taskList);
+            prefsEditor.clear();
+            prefsEditor.putString("savedTasks", json);
+            prefsEditor.commit();
+
             super.onBackPressed();
         }
     }
