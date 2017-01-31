@@ -14,11 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 public class NewTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private String deadlineYear = "2017", deadlineMonth = "01", deadlineDay = "01", deadlineHour = "00", deadlineMinute = "00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +41,91 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
 
         final Button submit = (Button) findViewById(R.id.addButton);
         final TextView what = (TextView) findViewById(R.id.whatText);
-        final TextView deadline = (TextView) findViewById(R.id.deadlineText);
+        //final TextView deadline = (TextView) findViewById(R.id.deadlineText);
         final TextView duration = (TextView) findViewById(R.id.durationText);
         final TextView where = (TextView) findViewById(R.id.whereText);
+
+        NumberPicker yearPicker = (NumberPicker) findViewById(R.id.numberPicker);
+        yearPicker.setMinValue(2017);
+        yearPicker.setMaxValue(2150);
+        yearPicker.setWrapSelectorWheel(false);
+        yearPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                deadlineYear = ((Integer) newVal).toString();
+            }
+        });
+
+        NumberPicker monthPicker = (NumberPicker) findViewById(R.id.numberPicker2);
+        monthPicker.setMinValue(1);
+        monthPicker.setMaxValue(12);
+        monthPicker.setWrapSelectorWheel(true);
+        monthPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                deadlineMonth = ((Integer) newVal).toString();
+                if (deadlineMonth.length() < 2){
+                    deadlineMonth += "0";
+                }
+            }
+        });
+
+        NumberPicker dayPicker = (NumberPicker) findViewById(R.id.numberPicker3);
+        dayPicker.setMinValue(1);
+        dayPicker.setMaxValue(31);
+        dayPicker.setWrapSelectorWheel(true);
+        dayPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                deadlineDay = ((Integer) newVal).toString();
+                if (deadlineDay.length() < 2){
+                    deadlineDay += "0";
+                }
+            }
+        });
+
+        NumberPicker hourPicker = (NumberPicker) findViewById(R.id.numberPicker4);
+        hourPicker.setMinValue(0);
+        hourPicker.setMaxValue(23);
+        hourPicker.setWrapSelectorWheel(true);
+        hourPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                deadlineHour = ((Integer) newVal).toString();
+                if (deadlineHour.length() < 2){
+                    deadlineHour += "0";
+                }
+            }
+        });
+
+        NumberPicker minutePicker = (NumberPicker) findViewById(R.id.numberPicker5);
+        minutePicker.setMinValue(0);
+        minutePicker.setMaxValue(59);
+        minutePicker.setWrapSelectorWheel(true);
+        minutePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                deadlineMinute = ((Integer) newVal).toString();
+                if (deadlineMinute.length() < 2){
+                    deadlineMinute += "0";
+                }
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Task t = new Task();
-                t.setWhat(what.getText().toString());
-                t.setDeadline(deadline.getText().toString());
-                t.setDuration(Double.parseDouble(duration.getText().toString()));
-                t.setWhere(where.getText().toString());
-                t.setOrder(-1);
+                try {
+                    t.setWhat(what.getText().toString());
+                    t.setDeadline(deadlineYear + "/" + deadlineMonth + "/" + deadlineDay + " " + deadlineHour + ":" + deadlineMinute);
+                    t.setDuration(Double.parseDouble(duration.getText().toString()));
+                    t.setWhere(where.getText().toString());
+                    t.setOrder(-1);
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), " WTF are you trying to create??? ", Toast.LENGTH_SHORT).show();
+                    System.out.println(e);
+                }
                 Sorter Sorter = new Sorter();
                 if (Sorter.doabilityCheck(t)) {
                     AllTasksView.taskList.add(t);

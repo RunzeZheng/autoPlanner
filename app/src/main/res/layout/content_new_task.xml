@@ -51,23 +51,58 @@
             android:text="Deadline:"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <EditText
-            android:id="@+id/deadlineText"
-            android:layout_width="match_parent"
+        <NumberPicker
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:id="@+id/numberPicker"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="10dip"
+            android:overScrollMode="ifContentScrolls"
+            android:layout_alignParentLeft="false"
+            android:layout_alignLeft="@+id/deadline"
             android:layout_below="@+id/deadline"
-            android:ems="10"
-            android:inputType="textMultiLine" />
+            android:layout_margin="5dp" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker2"
+            android:layout_alignBottom="@+id/numberPicker"
+            android:layout_toRightOf="@+id/numberPicker" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker3"
+            android:layout_alignBottom="@+id/numberPicker2"
+            android:layout_toRightOf="@+id/numberPicker2"
+            android:layout_marginLeft="5dp" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker4"
+            android:layout_alignBottom="@+id/numberPicker3"
+            android:layout_toRightOf="@+id/numberPicker3"
+            android:layout_marginLeft="5dp" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberPicker5"
+            android:layout_alignBottom="@+id/numberPicker4"
+            android:layout_toRightOf="@+id/numberPicker4"
+            android:layout_marginLeft="5dp" />
 
         <TextView
-            android:text="Duration: "
+            android:text="Time needed: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/duration"
             android:textAppearance="@android:style/TextAppearance.Material.Large"
             android:fontFamily="sans-serif-light"
-            android:layout_below="@+id/deadlineText" />
+            android:layout_below="@+id/numberPicker"
+            android:layout_margin="5dp"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -76,6 +111,16 @@
             android:ems="10"
             android:id="@+id/durationText"
             android:layout_below="@+id/duration" />
+
+        <TextView
+            android:text="Hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6"
+            android:layout_toRightOf="@+id/durationText"
+            android:layout_alignBottom="@+id/durationText"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:fontFamily="sans-serif-light" />
 
         <TextView
             android:id="@+id/where"

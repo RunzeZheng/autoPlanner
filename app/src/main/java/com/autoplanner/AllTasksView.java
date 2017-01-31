@@ -132,8 +132,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             prefsEditor.clear();
             prefsEditor.putString("savedTasks", json);
             prefsEditor.commit();
-
-            super.onBackPressed();
+            this.finish();
+            //super.onBackPressed();
         }
     }
 

@@ -3,6 +3,7 @@ package com.autoplanner;
 import android.util.ArraySet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public class Sorter {
 
         //duration to milliseconds
         duration = t.getDuration();
-        long durationInMilliseconds =(long) duration * 3600000;
+        double durationInMilliseconds =(double) duration * 3600000;
         t.setDurationMilli(durationInMilliseconds);
 
         long deadlineTimeInMillis = deadlineDate.getTime();
@@ -43,7 +44,8 @@ public class Sorter {
     public ArrayList<Task> optimizedSort(ArrayList<Task> taskList) {
         ArrayList<Task> workingTaskList = taskList, result = new ArrayList<>();
         ArrayList<Task> temp = new ArrayList<>(), temp2 = new ArrayList<>(), temp3 = new ArrayList<>();
-        long currentTime = System.currentTimeMillis();
+        ArrayList<Integer> trashIndex = new ArrayList<>();
+        double currentTime = System.currentTimeMillis();
         int order = 0;
 
         //update the variable timeLeftAfterDone and overDue
@@ -59,62 +61,88 @@ public class Sorter {
         }
 
         while (!workingTaskList.isEmpty()) {
-            long smallest = workingTaskList.get(0).getTimeLeftAfterDone();
+            double smallest = workingTaskList.get(0).getTimeLeftAfterDone();
             temp.clear();
             temp2.clear();
             temp3.clear();
 
             //sort by timeLeftAfterDone first
-            for (int i = 0; i < workingTaskList.size(); i++) {
+            int workingTaskListSize = workingTaskList.size();
+            for (int i = 0; i < workingTaskListSize; i++) {
                 if (workingTaskList.get(i).getTimeLeftAfterDone() < smallest) {
                     smallest = workingTaskList.get(i).getTimeLeftAfterDone();
                     temp.clear();
+                    trashIndex.clear();
+                    temp.add(workingTaskList.get(i));
+                    trashIndex.add(i);
                 } else if (workingTaskList.get(i).getTimeLeftAfterDone() == smallest) {
                     temp.add(workingTaskList.get(i));
-                    workingTaskList.remove(i);
+                    trashIndex.add(i);
+                    //workingTaskList.remove(i);
                 }
             }
+            workingTaskList = removeTrash(workingTaskList, trashIndex);
+            trashIndex.clear();
 
-            while (!temp.isEmpty()) {
-                //then sort by deadline
-                if (temp.size() > 1) {
-                    long smallestDeadline = temp.get(0).getDeadlineMilli();
-                    for (int i = 0; i < temp.size(); i++) {
-                        if (temp.get(i).getDeadlineMilli() < smallestDeadline) {
-                            smallestDeadline = temp.get(i).getDeadlineMilli();
-                            temp2.clear();
-                        } else if (temp.get(i).getDeadlineMilli() == smallestDeadline) {
-                            temp2.add(temp.get(i));
-                            temp.remove(i);
-                        }
-                    }
-                } else if (temp.size() == 1) {
-                    result.add(temp.get(0));
-                    temp.remove(0);
-                }
-
-                while (!temp2.isEmpty()) {
-                    //lastly sort by duration
-                    if (temp2.size() > 1){
-                        long smallestDuration = temp2.get(0).getDurationMilli();
-                        for (int i = 0; i < temp2.size(); i++) {
-                            if (temp2.get(i).getDurationMilli() < smallestDuration){
-                                smallestDuration = temp2.get(i).getDurationMilli();
-                                temp3.clear();
-                            }else if (temp2.get(i).getDurationMilli() == smallestDuration){
-                                temp3.add(temp2.get(i));
-                                temp2.remove(i);
+                while (!temp.isEmpty()) {
+                    //then sort by deadline second
+                    if (temp.size() > 1) {
+                        double smallestDeadline = temp.get(0).getDeadlineMilli();
+                        int tempSize = temp.size();
+                        for (int i = 0; i < tempSize; i++) {
+                            if (temp.get(i).getDeadlineMilli() < smallestDeadline) {
+                                smallestDeadline = temp.get(i).getDeadlineMilli();
+                                temp2.clear();
+                                trashIndex.clear();
+                                temp2.add(workingTaskList.get(i));
+                                trashIndex.add(i);
+                            } else if (temp.get(i).getDeadlineMilli() == smallestDeadline) {
+                                temp2.add(temp.get(i));
+                                trashIndex.add(i);
                             }
                         }
-                    } else if (temp2.size() == 1){
-                        result.add(temp2.get(0));
-                        temp2.remove(0);
+                        temp = removeTrash(temp, trashIndex);
+                        trashIndex.clear();
+                    } else if (temp.size() == 1) {
+                        result.add(temp.get(0));
+                        temp.remove(0);
+                    }
+
+                    while (!temp2.isEmpty()) {
+                        //sort by duration third
+                        if (temp2.size() > 1) {
+                            double smallestDuration = temp2.get(0).getDurationMilli();
+                            int temp2Size = temp2.size();
+                            for (int i = 0; i < temp2Size; i++) {
+                                if (temp2.get(i).getDurationMilli() < smallestDuration) {
+                                    smallestDuration = temp2.get(i).getDurationMilli();
+                                    temp3.clear();
+                                    trashIndex.clear();
+                                    temp3.add(workingTaskList.get(i));
+                                    trashIndex.add(i);
+                                } else if (temp2.get(i).getDurationMilli() == smallestDuration) {
+                                    temp3.add(temp2.get(i));
+                                    trashIndex.add(i);
+                                }
+                            }
+                            temp2 = removeTrash(temp2, trashIndex);
+                            trashIndex.clear();
+                        } else if (temp2.size() == 1) {
+                            result.add(temp2.get(0));
+                            temp2.remove(0);
+                        }
                     }
                 }
-            }
         }
 
-        return workingTaskList;
+        return result;
     }
 
+    private ArrayList<Task> removeTrash(ArrayList<Task> working,ArrayList<Integer> trash){
+        Collections.sort(trash);
+        for (int i = trash.size()-1; i >= 0; i--) {
+            working.remove((int) trash.get(i));
+        }
+        return working;
+    }
 }
