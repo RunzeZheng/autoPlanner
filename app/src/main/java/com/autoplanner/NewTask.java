@@ -51,8 +51,8 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
                 t.setDuration(Double.parseDouble(duration.getText().toString()));
                 t.setWhere(where.getText().toString());
                 t.setOrder(-1);
-                sorter sorter = new sorter();
-                if (sorter.doabilityCheck(t)) {
+                Sorter Sorter = new Sorter();
+                if (Sorter.doabilityCheck(t)) {
                     AllTasksView.taskList.add(t);
 
                     SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);

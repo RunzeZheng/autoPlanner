@@ -13,19 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHolder> {
-    private ArraySet<String> deadline = new ArraySet<>();
-    private ArraySet<Double> duration = new ArraySet<>();
-    private ArraySet<String> what = new ArraySet<>();
-    private ArraySet<String> where = new ArraySet<>();
+import java.util.ArrayList;
 
-    public RecyclerAdapter(ArraySet<Task> taskList) {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHolder> {
+    private ArrayList<String> deadline = new ArrayList<>();
+    private ArrayList<Double> duration = new ArrayList<>();
+    private ArrayList<String> what = new ArrayList<>();
+    private ArrayList<String> where = new ArrayList<>();
+
+    public RecyclerAdapter(ArrayList<Task> taskList) {
         if (taskList.size() != 0) {
             for (int i = 0; i < taskList.size(); i++) {
-                what.add(taskList.valueAt(i).getWhat());
-                deadline.add(taskList.valueAt(i).getDeadline());
-                duration.add(taskList.valueAt(i).getDuration());
-                where.add(taskList.valueAt(i).getWhere());
+                what.add(i, taskList.get(i).getWhat());
+                deadline.add(i, taskList.get(i).getDeadline());
+                duration.add(i, taskList.get(i).getDuration());
+                where.add(i, taskList.get(i).getWhere());
             }
         }
     }
@@ -39,9 +41,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
     @Override
     public void onBindViewHolder(TaskHolder holder, int position) {
         try {
-            holder.bindTask(what.valueAt(position), deadline.valueAt(position), duration.valueAt(position), where.valueAt(position));
+            holder.bindTask(what.get(position), deadline.get(position), duration.get(position), where.get(position));
         } catch (ArrayIndexOutOfBoundsException e) {
-            holder.bindTask(what.valueAt(position), null, null, null);
+            holder.bindTask(what.get(position), null, null, null);
         }
     }
 
@@ -81,7 +83,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
         public void bindTask(String what, String when, Double duration, String where) {
             mItemWhat.setText(what);
             mItemDeadline.setText(when);
-            mItemDuration.setText(duration.toString() + "hours");
+            mItemDuration.setText(duration.toString() + " hours");
             mItemWhere.setText(where);
         }
     }

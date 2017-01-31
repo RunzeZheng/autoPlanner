@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.ArraySet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,11 +23,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class AllTasksView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /* create the array list to save the data */
-    public static ArraySet<Task> taskList = new ArraySet<>();
+    public static ArrayList<Task> taskList = new ArrayList<>();
     private final int InternetRequest = 0;
     private final int GoogleRequest = 93;
     private RecyclerView mRecyclerView;
@@ -44,7 +43,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         //used to load the saved tasks even when program is closed
-        Type dataType = new TypeToken<ArraySet<Task>>() {}.getType();
+        Type dataType = new TypeToken<ArrayList<Task>>() {}.getType();
         SharedPreferences prefs = this.getSharedPreferences("savedTasks",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString("savedTasks", "");
@@ -52,7 +51,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
 
         //if there is nothing in the task list, add a welcome message otherwise a null pointer exception will be thrown
         if (taskList == null){
-            taskList = new ArraySet<>();
+            taskList = new ArrayList<>();
             Task t = new Task();
             t.setWhat("Welcome to auto planner! There is no task. Please add a new task to get started.");
             t.setDeadline("2017 01 30 23 59");
@@ -69,6 +68,10 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             json = prefs.getString("savedTasks", "");
             taskList = gson.fromJson(json, dataType);
         }
+
+        //sort
+        Sorter sr = new Sorter();
+        taskList = sr.optimizedSort(taskList);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

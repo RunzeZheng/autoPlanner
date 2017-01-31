@@ -8,7 +8,7 @@ public class Task {
     private String what, where, deadline;
     private int order;
     private double duration;
-    private long deadlindMilli, durationMilli, timeLeftAfterDone;
+    private long deadlineMilli, durationMilli, timeLeftAfterDone;
     private boolean overDue;
 
     public Task(){
@@ -70,12 +70,12 @@ public class Task {
         this.durationMilli = durationMilli;
     }
 
-    public long getDeadlindMilli() {
-        return deadlindMilli;
+    public long getDeadlineMilli() {
+        return deadlineMilli;
     }
 
-    public void setDeadlindMilli(long deadlindMilli) {
-        this.deadlindMilli = deadlindMilli;
+    public void setDeadlineMilli(long deadlineMilli) {
+        this.deadlineMilli = deadlineMilli;
     }
 
     public boolean isOverDue() {

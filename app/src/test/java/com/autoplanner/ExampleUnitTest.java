@@ -1,9 +1,7 @@
 package com.autoplanner;
 
 import android.util.ArraySet;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -17,7 +15,7 @@ public class ExampleUnitTest {
     public static void main(String args[]) {
         ArraySet<Task> mockedArraySet = mock(ArraySet.class);
 
-        Task a = new Task();
+        /*Task a = new Task();
         a.setWhat("task1");
         a.setDeadline("2017/01/30 21:00");
         a.setDuration(1);
@@ -46,7 +44,7 @@ public class ExampleUnitTest {
         when(mockedArraySet.valueAt(1)).thenReturn(b);
         when(mockedArraySet.valueAt(2)).thenReturn(c);
 
-        sorter s = new sorter();
-        s.optimizedSort(mockedArraySet);
+        Sorter s = new Sorter();
+        s.optimizedSort(mockedArraySet);*/
     }
 }
