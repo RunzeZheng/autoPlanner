@@ -7,13 +7,12 @@ package com.autoplanner;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.ArrayList;
+import static com.autoplanner.AllTasksView.taskList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHolder> {
     private ArrayList<String> deadline = new ArrayList<>();
@@ -86,5 +85,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
             mItemDuration.setText(duration.toString() + " hours");
             mItemWhere.setText(where);
         }
+    }
+
+    public void remove(int pos){
+        taskList.remove(pos);
+        notifyItemRemoved(pos);
     }
 }

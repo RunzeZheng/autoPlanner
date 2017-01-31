@@ -55,6 +55,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
                 if (Sorter.doabilityCheck(t)) {
                     AllTasksView.taskList.add(t);
 
+                    //parse a gson and save to shared preference
                     SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);
                     SharedPreferences.Editor prefsEditor = prefs.edit();
                     Gson gson = new Gson();

@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,8 +71,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         }
 
         //sort
-        Sorter sr = new Sorter();
-        taskList = sr.optimizedSort(taskList);
+        //Sorter sr = new Sorter();
+        //taskList = sr.optimizedSort(taskList);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,10 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         /* create the adapter itself */
         mAdapter = new RecyclerAdapter(taskList);
         mRecyclerView.setAdapter(mAdapter);
+
+        ItemTouchHelper.Callback callback = new TaskTouchHelper(mAdapter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
@@ -119,7 +124,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            //super.onBackPressed();
+            super.onBackPressed();
         }
     }
 
