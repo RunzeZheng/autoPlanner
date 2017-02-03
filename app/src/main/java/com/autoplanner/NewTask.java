@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.NumberPicker;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.google.gson.Gson;
 
 public class NewTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String deadlineYear = "2017", deadlineMonth = "01", deadlineDay = "01", deadlineHour = "00", deadlineMinute = "00";
+    private boolean switchChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,28 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
 
         final Button submit = (Button) findViewById(R.id.addButton);
         final TextView what = (TextView) findViewById(R.id.whatText);
-        //final TextView deadline = (TextView) findViewById(R.id.deadlineText);
         final TextView duration = (TextView) findViewById(R.id.durationText);
         final TextView where = (TextView) findViewById(R.id.whereText);
+        final Switch typeSwitch = (Switch) findViewById(R.id.typeSwitch);
+        final TextView startingTimeTextView = (TextView) findViewById(R.id.startingTimeTextView);
+
+        typeSwitch.setChecked(false);
+        typeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    //stating time mode
+                    startingTimeTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    typeSwitch.setTextColor(getResources().getColor(R.color.colorInactive));
+                    switchChecked = true;
+                }else{
+                    //deadline mode
+                    startingTimeTextView.setTextColor(getResources().getColor(R.color.colorInactive));
+                    typeSwitch.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    switchChecked = false;
+                }
+            }
+        });
 
         NumberPicker yearPicker = (NumberPicker) findViewById(R.id.numberPicker);
         yearPicker.setMinValue(2017);
@@ -121,7 +144,9 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
                     t.setDeadline(deadlineYear + "/" + deadlineMonth + "/" + deadlineDay + " " + deadlineHour + ":" + deadlineMinute);
                     t.setDuration(Double.parseDouble(duration.getText().toString()));
                     t.setWhere(where.getText().toString());
-                    t.setOrder(-1);
+                    if (switchChecked){
+                        t.setMode(true);
+                    }
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), " WTF are you trying to create??? ", Toast.LENGTH_SHORT).show();
                     System.out.println(e);

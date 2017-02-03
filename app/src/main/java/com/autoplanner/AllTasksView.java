@@ -58,7 +58,6 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             t.setWhat("Welcome to auto planner! There is no task. Please add a new task to get started.");
             t.setDeadline("2017 01 30 23 59");
             t.setWhere("Made by Runze Zheng");
-            t.setOrder(-1);
             taskList.add(t);
 
             SharedPreferences.Editor prefsEditor = prefs.edit();
@@ -103,10 +102,11 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(20, true));
 
-        /* create the adapter itself */
+        /* create the recycler adapter */
         mAdapter = new RecyclerAdapter(taskList);
         mRecyclerView.setAdapter(mAdapter);
 
+        //implement swipe to delete
         ItemTouchHelper.Callback callback = new TaskTouchHelper(mAdapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(mRecyclerView);

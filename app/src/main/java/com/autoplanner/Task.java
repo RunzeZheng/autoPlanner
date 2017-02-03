@@ -6,9 +6,8 @@ package com.autoplanner;
 
 public class Task {
     private String what, where, deadline;
-    private int order;
     private double duration, durationMilli, timeLeftAfterDone, deadlineMilli;
-    private boolean overDue;
+    private boolean overDue = false, mode = false;
 
     public Task(){
     }
@@ -45,14 +44,6 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
     public double getTimeLeftAfterDone() {
         return timeLeftAfterDone;
     }
@@ -83,5 +74,13 @@ public class Task {
 
     public void setOverDue(boolean overDue) {
         this.overDue = overDue;
+    }
+
+    public boolean isMode() {
+        return mode;
+    }
+
+    public void setMode(boolean mode) {
+        this.mode = mode;
     }
 }

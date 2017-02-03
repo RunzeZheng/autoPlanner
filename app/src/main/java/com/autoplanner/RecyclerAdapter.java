@@ -19,6 +19,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
     private ArrayList<Double> duration = new ArrayList<>();
     private ArrayList<String> what = new ArrayList<>();
     private ArrayList<String> where = new ArrayList<>();
+    private ArrayList<Boolean> mode = new ArrayList<>();
 
     public RecyclerAdapter(ArrayList<Task> taskList) {
         if (taskList.size() != 0) {
@@ -27,6 +28,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
                 deadline.add(i, taskList.get(i).getDeadline());
                 duration.add(i, taskList.get(i).getDuration());
                 where.add(i, taskList.get(i).getWhere());
+                mode.add(i, taskList.get(i).isMode());
             }
         }
     }
@@ -40,9 +42,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
     @Override
     public void onBindViewHolder(TaskHolder holder, int position) {
         try {
-            holder.bindTask(what.get(position), deadline.get(position), duration.get(position), where.get(position));
+            holder.bindTask(what.get(position), deadline.get(position), duration.get(position), where.get(position), mode.get(position));
         } catch (ArrayIndexOutOfBoundsException e) {
-            holder.bindTask(what.get(position), null, null, null);
+            holder.bindTask(what.get(position), null, null, null, null);
         }
     }
 
@@ -79,11 +81,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
             context.startActivity(showTaskIntent);
         }
 
-        public void bindTask(String what, String when, Double duration, String where) {
+        public void bindTask(String what, String when, Double duration, String where, Boolean mode) {
             mItemWhat.setText(what);
-            mItemDeadline.setText(when);
-            mItemDuration.setText(duration.toString() + " hours");
-            mItemWhere.setText(where);
+            String leadingWord = "Deadline: ";
+            if (mode){
+                leadingWord = "Staring at: ";
+            }
+            mItemDeadline.setText(leadingWord + when);
+            mItemDuration.setText("Need: " + duration.toString() + " hours");
+            mItemWhere.setText("At: " + where);
         }
     }
 

@@ -12,10 +12,10 @@ import java.util.Date;
 public class Sorter {
 
     public boolean doabilityCheck(Task t) {
-        String endTime;
-        String year, month, day, hour, minute;
-        long deadline, currentTimeInMillis;
+        String endTime, year, month, day, hour, minute;
+        long currentTimeInMillis;
         double  duration;
+        boolean switchedMode;
 
         currentTimeInMillis = System.currentTimeMillis();
 
@@ -26,18 +26,23 @@ public class Sorter {
         day = endTime.substring(8, 10);//day
         hour = endTime.substring(11, 13);//hour
         minute = endTime.substring(14, 16);//minute
+        switchedMode = t.isMode();//startingAt or doneBy mode
         String myDate = year+"/"+month+"/"+day+"/"+" "+hour+":"+minute;
         Date deadlineDate = new Date(myDate);
+        long deadlineTimeInMillis = deadlineDate.getTime();
+        t.setDeadlineMilli(deadlineTimeInMillis);
 
         //duration to milliseconds
         duration = t.getDuration();
         double durationInMilliseconds = duration * 3600000;
         t.setDurationMilli(durationInMilliseconds);
 
-        long deadlineTimeInMillis = deadlineDate.getTime();
-        t.setDeadlineMilli(deadlineTimeInMillis);
-        //don't allow to add task if deadline is in the past or time is not enough to finish the task
-        return !(deadlineTimeInMillis < currentTimeInMillis || currentTimeInMillis + durationInMilliseconds > deadlineTimeInMillis);
+        if (switchedMode){
+            return !(deadlineTimeInMillis < currentTimeInMillis);
+        }else {
+            //don't allow to add task if deadline is in the past or time is not enough to finish the task
+            return !(deadlineTimeInMillis < currentTimeInMillis || currentTimeInMillis + durationInMilliseconds > deadlineTimeInMillis);
+        }
     }
 
 
