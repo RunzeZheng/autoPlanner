@@ -6,7 +6,9 @@
     android:clickable="true"
     android:showDividers="middle|beginning|end|none"
     android:layoutMode="opticalBounds"
-    android:elevation="3dp">
+    android:elevation="5dp"
+    android:padding="5dp"
+    android:layout_margin="6dp">
 
     <TextView
         android:id="@+id/item_description"

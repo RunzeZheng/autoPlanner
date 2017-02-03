@@ -20,7 +20,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
 
-        if (parent.getChildAdapterPosition(view) != 0) {
+        if (parent.getChildAdapterPosition(view) >= 0) {
             if (verticalOrientation) {
                 outRect.set(10, 20, 20, 10);
             }

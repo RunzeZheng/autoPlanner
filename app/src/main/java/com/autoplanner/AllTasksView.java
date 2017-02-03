@@ -43,13 +43,14 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //used to load the saved tasks even when program is closed
+        //sharedPreferences
         Type dataType = new TypeToken<ArrayList<Task>>() {}.getType();
         SharedPreferences prefs = this.getSharedPreferences("savedTasks",MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString("savedTasks", "");
         taskList = gson.fromJson(json, dataType);
 
+        //run when app starts for the first time
         //if there is nothing in the task list, add a welcome message otherwise a null pointer exception will be thrown
         if (taskList == null){
             taskList = new ArrayList<>();
@@ -74,6 +75,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         Sorter sr = new Sorter();
         taskList = sr.optimizedSort(taskList);
 
+        //fab
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +86,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
+        //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -116,6 +120,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStop() {
         super.onStop();
+        finish();
     }
 
     @Override
@@ -132,8 +137,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             prefsEditor.clear();
             prefsEditor.putString("savedTasks", json);
             prefsEditor.commit();
-            this.finish();
-            //super.onBackPressed();
+
+            super.onBackPressed();
         }
     }
 

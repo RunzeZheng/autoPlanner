@@ -52,6 +52,9 @@ public class DetailView extends AppCompatActivity implements NavigationView.OnNa
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            Intent mainIntent = new Intent(this.getApplicationContext(), AllTasksView.class);
+            startActivity(mainIntent);
+            finish();
             super.onBackPressed();
         }
     }

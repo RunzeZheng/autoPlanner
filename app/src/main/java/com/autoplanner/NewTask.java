@@ -65,7 +65,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 deadlineMonth = ((Integer) newVal).toString();
                 if (deadlineMonth.length() < 2){
-                    deadlineMonth += "0";
+                    deadlineMonth = "0" + deadlineMonth;
                 }
             }
         });
@@ -79,7 +79,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 deadlineDay = ((Integer) newVal).toString();
                 if (deadlineDay.length() < 2){
-                    deadlineDay += "0";
+                    deadlineDay = "0" + deadlineDay;
                 }
             }
         });
@@ -93,7 +93,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 deadlineHour = ((Integer) newVal).toString();
                 if (deadlineHour.length() < 2){
-                    deadlineHour += "0";
+                    deadlineHour = "0" + deadlineHour;
                 }
             }
         });
@@ -107,7 +107,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
             public void onValueChange(NumberPicker picker, int oldVal, int newVal){
                 deadlineMinute = ((Integer) newVal).toString();
                 if (deadlineMinute.length() < 2){
-                    deadlineMinute += "0";
+                    deadlineMinute = "0" + deadlineMinute;
                 }
             }
         });
@@ -143,6 +143,7 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
                     Context context = view.getContext();
                     Intent intent = new Intent(context, AllTasksView.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     submit.setText("Task already overdue or don't have enough time to finish");
                 }
@@ -156,6 +157,9 @@ public class NewTask extends AppCompatActivity implements NavigationView.OnNavig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            Intent mainIntent = new Intent(this.getApplicationContext(), AllTasksView.class);
+            startActivity(mainIntent);
+            finish();
             super.onBackPressed();
         }
     }

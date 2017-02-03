@@ -31,7 +31,7 @@ public class Sorter {
 
         //duration to milliseconds
         duration = t.getDuration();
-        double durationInMilliseconds =(double) duration * 3600000;
+        double durationInMilliseconds = duration * 3600000;
         t.setDurationMilli(durationInMilliseconds);
 
         long deadlineTimeInMillis = deadlineDate.getTime();
