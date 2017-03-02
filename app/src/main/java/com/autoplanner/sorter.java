@@ -41,7 +41,8 @@ public class Sorter {
             return !(deadlineTimeInMillis < currentTimeInMillis);
         }else {
             //don't allow to add task if deadline is in the past or time is not enough to finish the task
-            return !(deadlineTimeInMillis < currentTimeInMillis || currentTimeInMillis + durationInMilliseconds > deadlineTimeInMillis);
+            return !(deadlineTimeInMillis < currentTimeInMillis ||
+                    currentTimeInMillis + durationInMilliseconds > deadlineTimeInMillis);
         }
     }
 
