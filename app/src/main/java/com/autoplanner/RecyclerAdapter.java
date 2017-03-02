@@ -83,13 +83,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TaskHo
 
         public void bindTask(String what, String when, Double duration, String where, Boolean mode) {
             mItemWhat.setText(what);
-            String leadingWord = "Deadline: ";
+            String leadingWord = "Done by: ";
             if (mode){
                 leadingWord = "Staring at: ";
             }
             mItemDeadline.setText(leadingWord + when);
-            mItemDuration.setText("Need: " + duration.toString() + " hours");
-            mItemWhere.setText("At: " + where);
+            mItemDuration.setText(duration.toString() + " hours");
+            mItemWhere.setText(where);
         }
     }
 
