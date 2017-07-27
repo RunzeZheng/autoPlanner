@@ -28,13 +28,12 @@ import java.util.ArrayList;
 
 public class AllTasksView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /* create the array list to save the data */
-    public static ArrayList<Task> taskList = new ArrayList<>();
-    private final int InternetRequest = 0;
-    private final int GoogleRequest = 93;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
-    private RecyclerAdapter mAdapter;
+    public static ArrayList<Task> taskList = new ArrayList<>();                                                         //create the array list to save the data
+    //private final int InternetRequest = 0;
+    //private final int GoogleRequest = 93;
+    private RecyclerView mRecyclerView;                                                                                 //create the recycler view
+    private LinearLayoutManager mLinearLayoutManager;                                                                   //create the layout manager
+    private RecyclerAdapter mAdapter;                                                                                   //create the recycler adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +49,8 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         String json = prefs.getString("savedTasks", "");
         taskList = gson.fromJson(json, dataType);
 
-        //run when app starts for the first time
-        //if there is nothing in the task list, add a welcome message otherwise a null pointer exception will be thrown
+        /*run when app starts for the first time if there is nothing in the task list, add a welcome message otherwise a
+         null pointer exception will be thrown*/
         if (taskList == null){
             taskList = new ArrayList<>();
             Task t = new Task();
@@ -65,16 +64,16 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
             prefsEditor.putString("savedTasks", jsonSave);
             prefsEditor.apply();
 
-            //try again to get task list
+            /*try again to get task list*/
             json = prefs.getString("savedTasks", "");
             taskList = gson.fromJson(json, dataType);
         }
 
-        //sort
+        /*sort*/
         Sorter sr = new Sorter();
         taskList = sr.optimizedSort(taskList);
 
-        //fab
+        /*fab*/
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,17 +85,16 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         });
 
 
-        //drawer
+        /*drawer*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-         /* create the recycler view */
+        /* create the recycler view */
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -106,7 +104,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
         mAdapter = new RecyclerAdapter(taskList);
         mRecyclerView.setAdapter(mAdapter);
 
-        //implement swipe to delete
+        /*implement swipe to delete*/
         ItemTouchHelper.Callback callback = new TaskTouchHelper(mAdapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(mRecyclerView);
@@ -127,10 +125,10 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+            drawer.closeDrawer(GravityCompat.START);                                                                    //If drawer is open, close it.
         } else {
-            //parse a gson and save to shared preference
-            SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);
+            /*parse a gson and save to shared preference*/
+            SharedPreferences prefs = getSharedPreferences("savedTasks", MODE_PRIVATE);                                 //If drawer is closed, save data and quit.
             SharedPreferences.Editor prefsEditor = prefs.edit();
             Gson gson = new Gson();
             String json = gson.toJson(AllTasksView.taskList);
@@ -212,7 +210,7 @@ public class AllTasksView extends AppCompatActivity implements NavigationView.On
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     this.findViewById(R.id.loginImageView).callOnClick();
                 } else {
-                    Log.i("get google failed", "Permissions not granted for Google sign-in. :(");
+                    Log.i("get google failed", "Permissions not granted for Google sign-in.");
                 }
         }
     }
