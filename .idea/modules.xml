@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoPlanner.iml" filepath="$PROJECT_DIR$/autoPlanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/planneronwatch/planneronwatch.iml" filepath="$PROJECT_DIR$/planneronwatch/planneronwatch.iml" />
     </modules>
   </component>
 </project>

@@ -4,13 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +13,11 @@ import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.gson.Gson;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NewTask extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String deadlineYear = "2017", deadlineMonth = "01", deadlineDay = "01", deadlineHour = "00", deadlineMinute = "00";
